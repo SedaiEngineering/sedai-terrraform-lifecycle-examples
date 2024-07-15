@@ -83,7 +83,7 @@ resource "aws_ecs_cluster_capacity_providers" "example" {
   lifecycle {
     ignore_changes = [
       default_capacity_provider_strategy,
-      CapacityProviders
+      capacity_provider
     ]
   }
 }

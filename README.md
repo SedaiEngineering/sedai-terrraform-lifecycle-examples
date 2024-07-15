@@ -19,7 +19,7 @@
 *  container_definitions
 #### aws_ecs_cluster_capacity_providers
 * default_capacity_provider_strategy
-* CapacityProviders
+* capacity_provider
 
 ### lambda
 #### aws_lambda_function
