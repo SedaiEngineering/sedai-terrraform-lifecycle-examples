@@ -1,4 +1,9 @@
-## lifecycle ignore_changes are applied to:
+# Manage resource lifecycle
+Lifecycle arguments help control the flow of your Terraform operations by creating custom rules for resource creation and destruction. Instead of Terraform managing operations in the built-in dependency graph, lifecycle arguments help minimize potential downtime based on your resource needs as well as protect specific resources from changing or impacting infrastructure.
+## Ignore changes
+For changes outside the Terraform workflow that should not impact Terraform operations, we use the ignore_changes argument. Here are some expamles we can use to ignore the changes made by Sedai.
+
+### lifecycle ignore_changes are applied to:
 ### EC2
 * instance_type
 
