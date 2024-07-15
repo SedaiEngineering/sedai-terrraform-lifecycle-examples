@@ -15,9 +15,7 @@ For changes outside the Terraform workflow that should not impact Terraform oper
 ####  aws_ecs_service
 * desired_count
 * capacity_provider_strategy
-* enable_ecs_managed_tags
-* enable_execute_command
-* scheduling_strategy
+
 #### aws_ecs_task_definition
 *  cpu,
 *  memory,
