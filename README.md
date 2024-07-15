@@ -25,11 +25,17 @@ For changes outside the Terraform workflow that should not impact Terraform oper
 #### aws_ecs_cluster_capacity_providers
 * default_capacity_provider_strategy
 * capacity_provider
-
+#### aws_appautoscaling_target
+* max_capacity
+* min_capacity
+#### aws_appautoscaling_policy
+* target_tracking_scaling_policy_configuration[0].predefined_metric_specification,
+* target_tracking_scaling_policy_configuration[0].target_value
 ### lambda
 #### aws_lambda_function
 * memory_size
-* reserved_concurrent_executions
+* reserved_concurrent_executionstimeout
+* 
 ####   aws_lambda_provisioned_concurrency_config
 * provisioned_concurrent_executions
 

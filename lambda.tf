@@ -1,43 +1,3 @@
-resource "aws_iam_role" "lambda_role" {
-  name = "lambda-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = "sts:AssumeRole",
-        Principal = {
-          Service = "lambda.amazonaws.com",
-        },
-        Effect = "Allow",
-        Sid    = "",
-      },
-    ],
-  })
-}
-
-resource "aws_iam_policy" "lambda_policy" {
-  name = "lambda-policy"
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-        ],
-        Effect   = "Allow",
-        Resource = "arn:aws:logs:*:*:*",
-      },
-    ],
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = aws_iam_policy.lambda_policy.arn
-}
 
 resource "aws_lambda_function" "my_lambda" {
   function_name = "my_lambda_function"
@@ -53,7 +13,7 @@ resource "aws_lambda_function" "my_lambda" {
 
   # Configure memory
   memory_size = 512 # Change this to your desired memory size (in MB)
-
+  timeout     = 3
   # Add ReservedConcurrency settings
   reserved_concurrent_executions = 5 # Example value, adjust as needed
 
@@ -68,6 +28,7 @@ resource "aws_lambda_function" "my_lambda" {
     ignore_changes = [
       memory_size,
       reserved_concurrent_executions,
+      timeout
     ]
   }
 }
