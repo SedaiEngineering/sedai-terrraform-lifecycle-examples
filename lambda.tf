@@ -5,24 +5,24 @@ resource "aws_iam_role" "lambda_role" {
     Version = "2012-10-17",
     Statement = [
       {
-        Action    = "sts:AssumeRole",
+        Action = "sts:AssumeRole",
         Principal = {
           Service = "lambda.amazonaws.com",
         },
-        Effect    = "Allow",
-        Sid       = "",
+        Effect = "Allow",
+        Sid    = "",
       },
     ],
   })
 }
 
 resource "aws_iam_policy" "lambda_policy" {
-  name   = "lambda-policy"
+  name = "lambda-policy"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Action   = [
+        Action = [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents",
@@ -43,7 +43,7 @@ resource "aws_lambda_function" "my_lambda" {
   function_name = "my_lambda_function"
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.handler"
-  runtime       = "python3.8"  # Change this to your desired runtime
+  runtime       = "python3.8" # Change this to your desired runtime
 
   # Upload your zip file containing the function code
   filename         = "path/to/your/lambda.zip"
@@ -52,11 +52,11 @@ resource "aws_lambda_function" "my_lambda" {
   # Remove ephemeral storage block
 
   # Configure memory
-  memory_size = 512  # Change this to your desired memory size (in MB)
+  memory_size = 512 # Change this to your desired memory size (in MB)
 
   # Add ProvisionedConcurrency and ReservedConcurrency settings
-  provisioned_concurrent_executions = 10  # Example value, adjust as needed
-  reserved_concurrent_executions     = 5   # Example value, adjust as needed
+  provisioned_concurrent_executions = 10 # Example value, adjust as needed
+  reserved_concurrent_executions    = 5  # Example value, adjust as needed
 
   environment {
     variables = {

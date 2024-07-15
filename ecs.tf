@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "example" {
       dockerLabels = {
         "container-memorySoftLimit" = "512MiB",
         "container-memoryHardLimit" = "1GiB",
-        "container-cpuSoftLimit" = "512",
+        "container-cpuSoftLimit"    = "512",
       }
     }
   ])
@@ -55,12 +55,12 @@ resource "aws_ecs_service" "example" {
   launch_type = "EC2"
 
   network_configuration {
-    subnets         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"]  # replace with your subnet IDs
-    security_groups = ["sg-xxxxxxxx"]                         # replace with your security group ID
+    subnets         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"] # replace with your subnet IDs
+    security_groups = ["sg-xxxxxxxx"]                        # replace with your security group ID
   }
 
   load_balancer {
-    target_group_arn = "arn:aws:elasticloadbalancing:region:account-id:targetgroup/target-group-name/xxxxxxxxxxxxx"  # replace with your target group ARN
+    target_group_arn = "arn:aws:elasticloadbalancing:region:account-id:targetgroup/target-group-name/xxxxxxxxxxxxx" # replace with your target group ARN
     container_name   = "example-container"
     container_port   = 80
   }
