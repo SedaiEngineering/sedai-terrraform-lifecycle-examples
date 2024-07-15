@@ -10,6 +10,8 @@ For changes outside the Terraform workflow that should not impact Terraform oper
 ### EBS
 * iops
 * type
+* throughput
+* size
 
 ### ECS
 ####  aws_ecs_service
