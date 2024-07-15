@@ -63,9 +63,6 @@ resource "aws_ecs_service" "example" {
     ignore_changes = [
       desired_count,
       capacity_provider_strategy,
-      enable_ecs_managed_tags,
-      enable_execute_command,
-      scheduling_strategy,
     ]
   }
 }
@@ -83,7 +80,49 @@ resource "aws_ecs_cluster_capacity_providers" "example" {
   lifecycle {
     ignore_changes = [
       default_capacity_provider_strategy,
-      capacity_provider
+      capacity_providers
     ]
   }
 }
+
+resource "aws_appautoscaling_target" "example" {
+  max_capacity       = 10
+  min_capacity       = 1
+  resource_id        = "service/${aws_ecs_cluster.example.name}/${aws_ecs_service.example.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+  role_arn           = aws_iam_role.ecs_autoscaling_role.arn
+
+  lifecycle {
+    ignore_changes = [
+      max_capacity,
+      min_capacity
+    ]
+  }
+}
+
+resource "aws_appautoscaling_policy" "example" {
+  name               = "ecs-autoscaling-policy"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.example.resource_id
+  scalable_dimension = aws_appautoscaling_target.example.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.example.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    target_value = 50.0
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+
+    scale_in_cooldown  = 60
+    scale_out_cooldown = 60
+  }
+
+  lifecycle {
+    ignore_changes = [
+      target_tracking_scaling_policy_configuration[0].predefined_metric_specification,
+      target_tracking_scaling_policy_configuration[0].target_value
+    ]
+  }
+}
+
