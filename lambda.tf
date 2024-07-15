@@ -54,9 +54,8 @@ resource "aws_lambda_function" "my_lambda" {
   # Configure memory
   memory_size = 512 # Change this to your desired memory size (in MB)
 
-  # Add ProvisionedConcurrency and ReservedConcurrency settings
-  #provisioned_concurrent_executions = 10 # Example value, adjust as needed
-  reserved_concurrent_executions    = 5  # Example value, adjust as needed
+  # Add ReservedConcurrency settings
+  reserved_concurrent_executions = 5 # Example value, adjust as needed
 
   environment {
     variables = {
@@ -69,6 +68,17 @@ resource "aws_lambda_function" "my_lambda" {
     ignore_changes = [
       memory_size,
       reserved_concurrent_executions,
+    ]
+  }
+}
+
+resource "aws_lambda_provisioned_concurrency_config" "example" {
+  function_name                     = aws_lambda_function.my_lambda.function_name
+  provisioned_concurrent_executions = 10
+  qualifier                         = aws_lambda_function.my_lambda.version
+  lifecycle {
+    ignore_changes = [
+      provisioned_concurrent_executions
     ]
   }
 }
