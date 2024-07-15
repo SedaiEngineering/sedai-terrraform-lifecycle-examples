@@ -1,12 +1,6 @@
 resource "aws_ecs_cluster" "example" {
   name = "example-cluster"
 
-  lifecycle {
-    ignore_changes = [
-      capacity_providers,
-      default_capacity_provider_strategy
-    ]
-  }
 }
 
 resource "aws_ecs_task_definition" "example" {
@@ -54,16 +48,16 @@ resource "aws_ecs_service" "example" {
 
   launch_type = "EC2"
 
-  network_configuration {
-    subnets         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"] # replace with your subnet IDs
-    security_groups = ["sg-xxxxxxxx"]                        # replace with your security group ID
-  }
+  # network_configuration {
+  #   subnets         = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"] # replace with your subnet IDs
+  #   security_groups = ["sg-xxxxxxxx"]                        # replace with your security group ID
+  # }
 
-  load_balancer {
-    target_group_arn = "arn:aws:elasticloadbalancing:region:account-id:targetgroup/target-group-name/xxxxxxxxxxxxx" # replace with your target group ARN
-    container_name   = "example-container"
-    container_port   = 80
-  }
+  # load_balancer {
+  #   target_group_arn = "arn:aws:elasticloadbalancing:region:account-id:targetgroup/target-group-name/xxxxxxxxxxxxx" # replace with your target group ARN
+  #   container_name   = "example-container"
+  #   container_port   = 80
+  # }
 
   lifecycle {
     ignore_changes = [

@@ -46,8 +46,8 @@ resource "aws_lambda_function" "my_lambda" {
   runtime       = "python3.8" # Change this to your desired runtime
 
   # Upload your zip file containing the function code
-  filename         = "path/to/your/lambda.zip"
-  source_code_hash = filebase64sha256("path/to/your/lambda.zip")
+  filename         = "scripts/lambda.zip"
+  source_code_hash = filebase64sha256("scripts/lambda.zip")
 
   # Remove ephemeral storage block
 
@@ -55,7 +55,7 @@ resource "aws_lambda_function" "my_lambda" {
   memory_size = 512 # Change this to your desired memory size (in MB)
 
   # Add ProvisionedConcurrency and ReservedConcurrency settings
-  provisioned_concurrent_executions = 10 # Example value, adjust as needed
+  #provisioned_concurrent_executions = 10 # Example value, adjust as needed
   reserved_concurrent_executions    = 5  # Example value, adjust as needed
 
   environment {
@@ -68,7 +68,6 @@ resource "aws_lambda_function" "my_lambda" {
   lifecycle {
     ignore_changes = [
       memory_size,
-      provisioned_concurrent_executions,
       reserved_concurrent_executions,
     ]
   }
