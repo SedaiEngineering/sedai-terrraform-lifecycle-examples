@@ -1,4 +1,4 @@
-## lifecycle ignore_changes apre applied to 
+## lifecycle ignore_changes are applied to:
 ### EC2
 * instance_type
 
