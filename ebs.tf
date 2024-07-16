@@ -4,7 +4,7 @@ resource "aws_ebs_volume" "example" {
   size              = 100   # Size in GB
   type              = "io1" # Volume type
   iops              = 1000  # IOPS (Only for io1 and io2 types)
-
+  throughput        = 500   # Throughput in MiB/s
   tags = {
     Name = "example-volume"
   }
@@ -12,7 +12,9 @@ resource "aws_ebs_volume" "example" {
   lifecycle {
     ignore_changes = [
       iops,
-      type
+      type,
+      throughput,
+      size
     ]
   }
 }
